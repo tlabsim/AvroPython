@@ -19,7 +19,7 @@ class AvroParser():
         return AvroParser.parse(text)
 
     def parse(self, text):
-        """Parses input text, matches and replaces using avrodict
+        """Parses input text, matches and replaces using avro library
 
         If a valid replacement is found, returns the replaced string. If
         no replacement is found, returns the input text.
@@ -27,7 +27,8 @@ class AvroParser():
         Usage:
 
         ::
-        from pyavrophonetic import avro
+        from avrolib import AvroParser
+        avro = AvroParser
         avro.parse("ami banglay gan gai")
 
         """
@@ -194,20 +195,12 @@ class AvroParser():
                     self._is_punctuation(fixed_text[chk]))
                 ^ negative):
                 replace = False
-        # -- self.VOWELS -- Checks: 1. Cursor should not be at first character
-        # -- if prefix or last character if suffix, 2. Character at chk
-        # -- should be a vowel. 3. 'negative' will invert the value of 1
-        # -- AND 2
         elif scope == 'vowel':
             if (not (((chk >= 0 and match['type'] == 'prefix') or
                     (chk < len(fixed_text) and match['type'] == 'suffix'))
                     and self._is_vowel(fixed_text[chk]))
                 ^ negative):
                 replace =  False
-        # -- self.CONSONANTS -- Checks: 1. Cursor should not be at first
-        # -- character if prefix or last character if suffix, 2. Character
-        # -- at chk should be a consonant. 3. 'negative' will invert the
-        # -- value of 1 AND 2
         elif scope == 'consonant':
             if (not (((chk >= 0 and match['type'] == 'prefix') or
                     (chk < len(fixed_text) and match['type'] == 'suffix'))
